@@ -12,12 +12,16 @@ My approaches so far:
 
 
 ## How to use
-Create a build directory, inside it run cmake and make
+Create a build directory, inside it run cmake and make:
 ```bash 
 mkdir build
 cd build
 cmake ..
 make
+```
+To run the program:
+```bash
+./main
 ```
 
 ## Reflections
