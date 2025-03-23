@@ -1,3 +1,0 @@
-/home/dancha420/myLXstuff/Personal/coding/C++/tiny_projects/fibonacci_1s/build/CMakeFiles/main.dir
-/home/dancha420/myLXstuff/Personal/coding/C++/tiny_projects/fibonacci_1s/build/CMakeFiles/edit_cache.dir
-/home/dancha420/myLXstuff/Personal/coding/C++/tiny_projects/fibonacci_1s/build/CMakeFiles/rebuild_cache.dir
