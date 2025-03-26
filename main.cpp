@@ -14,12 +14,6 @@
 using namespace std::chrono_literals;
 
 
-static bool done = false;
-void timer(){
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    std::cout << "timer has finished" << std::endl;
-    done = true;
-}
 
 
 int main(){
@@ -93,7 +87,30 @@ int main(){
 
     // std::cout << "fib(" << j << ") = " << num_naive << std::endl;
     
+
+    /////////////////////////vectorization
+    std::cout<<"\nvectorization approach\n";
+    std::chrono::time_point<std::chrono::high_resolution_clock> start_vec_appr, end_vec_appr;
+    std::chrono::duration<double> duration_per_fibonacci_vec_appr = 0s;
+
+    std::vector<unsigned> result;
+    for(int i = 15000; ; ++i){
+        start_vec_appr = std::chrono::high_resolution_clock::now();
+        result = vectorization_fb(i);
+        end_vec_appr = std::chrono::high_resolution_clock::now();
+        duration_per_fibonacci_vec_appr = end_vec_appr - start_vec_appr;
+        std::cout << "time: " << duration_per_fibonacci_vec_appr.count() << "s\n";
+        if(global_excede_time){
+            std::cout << "fib(" << i << ") = ";
+            print(vectorization_fb(i));
+            std::cout<<std::endl;
+            break;
+        }
+        
+    }
+
     return 0;
 }
 
+//bitset wrapper
 
