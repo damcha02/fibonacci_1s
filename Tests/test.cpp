@@ -85,6 +85,10 @@ TEST(FibonacciFunctions, RecursiveAndNaiveUntilFib30){
 //     }
 // }
 
+TEST(FibonacciFunctions, BasicRepetitionCheck){
+    std::vector<unsigned> result = vectorization_fb(15000);
+    EXPECT_EQ(vectorization_fb(15000), result);
+}
 
 // main func to run all tests
 int main(int argc, char **argv){
