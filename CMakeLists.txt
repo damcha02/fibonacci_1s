@@ -3,4 +3,6 @@ project (fibonacci)
 
 set (CMAKE_CXX_STANDARD 14)
 
+add_subdirectory(Tests)
+
 add_executable(main main.cpp fibonacci_functions.cpp)
