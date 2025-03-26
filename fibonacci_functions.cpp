@@ -60,7 +60,7 @@ std::vector<unsigned> vector_addition(std::vector<unsigned>& num1, std::vector<u
                 carry = 0;
             }
             if(num2.at(i) + carry >= 10){
-                result.push_back(num2.at(i) + carry);
+                result.push_back( (num2.at(i) + carry) % 10 );
                 carry = 1;
             }
         }
@@ -68,9 +68,8 @@ std::vector<unsigned> vector_addition(std::vector<unsigned>& num1, std::vector<u
     if(carry == 1){
         result.push_back(carry);
     }
-    num1 = num2;
+    std::swap(num1, num2);
     num2 = result;
-    //maybe std::swap?
     return result;
 }
 
@@ -94,7 +93,7 @@ std::vector<unsigned> vectorization_fb(long unsigned n){
     duration_per_fibonacci_vec_appr = end_vec_appr - start_vec_appr;
     if(duration_per_fibonacci_vec_appr >= 1s){
         global_excede_time = true;
-        std::cout << "finished after: " << duration_per_fibonacci_vec_appr.count() << "s";
+        std::cout << "finished after: " << duration_per_fibonacci_vec_appr.count() << "s\n";
         return num1;
     }
     return result;
