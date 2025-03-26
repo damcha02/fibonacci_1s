@@ -20,8 +20,4 @@ std::vector<unsigned> vector_addition(std::vector<unsigned>& num1, std::vector<u
 
 std::vector<unsigned> vectorization_fb(long unsigned n);
 
-void print(std::vector<unsigned> vec);
 
-// void test_recursive();
-
-// void test_naive();

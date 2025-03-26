@@ -9,108 +9,32 @@
  * @return n and n-th fibonacci number
  */
 
-
 #include "fibonacci_functions.hpp"
+#include "helper_functions.hpp"
+
 using namespace std::chrono_literals;
 
-
-
-
 int main(){
-
-    std::chrono::time_point<std::chrono::high_resolution_clock> start1, end1;
-    start1 = std::chrono::high_resolution_clock::now();
-    std::cout << "What's the biggest fibonacci number I can compute in a second without overflow?\n";
-    end1 = std::chrono::high_resolution_clock::now();
-
-    std::chrono::duration<double> elapsed_seconds = end1 - start1;
-    std::time_t end_time = std::chrono::system_clock::to_time_t(end1);
-    std::cout << std::ctime(&end_time);
-
-//////////////////////////////////////////////////////////
-    std::cout << "\nrecursive approach\n";
-    // std::thread t1 (timer);
-    int i = 0;
-    unsigned long long num = 0;
-    std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
-    std::chrono::duration<double> duration_per_fibonacci_number_recursive = 0s;
-    while(duration_per_fibonacci_number_recursive < 1s){
-        ++i;
-        start = std::chrono::high_resolution_clock::now();
-        num = recursive_fb(i);
-        end = std::chrono::high_resolution_clock::now();
-        duration_per_fibonacci_number_recursive = end - start;
-        if(duration_per_fibonacci_number_recursive > 1s){
-            --i;
-            start = std::chrono::high_resolution_clock::now();
-            num = recursive_fb(i);
-            end = std::chrono::high_resolution_clock::now();
-            duration_per_fibonacci_number_recursive = end - start;
-            break;
-        }
-    }
-    std::cout << "fib(" << i << ") = " << num << '\t' << "time: " << duration_per_fibonacci_number_recursive.count() << "s\n";
-    std::cout << "check result correctness: ";
-    if(num == naive_fb(i)) std::cout << "correct(n = "<< i << ")!\n";
-    else std::cout << "incorrect!\n";
-
-////////////////////////////////////////////
-    std::cout << "\nnaive approach\n";
-
-    unsigned long long num_naive = 0;
-    std::chrono::time_point<std::chrono::high_resolution_clock> start_naive, end_naive;
-    std::chrono::duration<double> duration_per_fibonacci_number_naive = 0s;
-
-    int j = 1;
-    while(true){
-        
-        start_naive = std::chrono::high_resolution_clock::now();
-        auto temp = naive_fb(j);
-        end_naive = std::chrono::high_resolution_clock::now();
-
-        if(temp == 0){
-            std::cout << "fib(" << j - 1 << ") = " << num_naive << '\t' << "time: " 
-            << duration_per_fibonacci_number_naive.count() <<"s"<< std::endl;
-            break;
-        }
-
-        num_naive = temp;
-        duration_per_fibonacci_number_naive = end_naive - start_naive;
-        ++j;
-    }
-    // std::cout << "fib(" << j << ") = " << num_naive << '\t' << "time: " << duration_per_fibonacci_number_naive.count() << std::endl;
-    std::cout << "check result correctess: ";
-    --j;
-    num_naive = naive_fb(j);
-    if(num_naive != 0) std::cout << "correct for (n = "<< j << ")!\n";
-    else std::cout << "incorrect!\n";
-
-    // std::cout << "fib(" << j << ") = " << num_naive << std::endl;
     
-
-    /////////////////////////vectorization
-    std::cout<<"\nvectorization approach\n";
-    std::chrono::time_point<std::chrono::high_resolution_clock> start_vec_appr, end_vec_appr;
-    std::chrono::duration<double> duration_per_fibonacci_vec_appr = 0s;
-
-    std::vector<unsigned> result;
-    for(int i = 15000; ; ++i){
-        start_vec_appr = std::chrono::high_resolution_clock::now();
-        result = vectorization_fb(i);
-        end_vec_appr = std::chrono::high_resolution_clock::now();
-        duration_per_fibonacci_vec_appr = end_vec_appr - start_vec_appr;
-        std::cout << "time: " << duration_per_fibonacci_vec_appr.count() << "s\n";
-        if(global_excede_time){
-            std::cout << "fib(" << i << ") = ";
-            print(vectorization_fb(i));
-            std::cout<<std::endl;
-            break;
-        }
-        
+    time_t timestamp;
+    time(&timestamp);
+    std::cout << ctime(&timestamp); // print current time
+    struct tm datetime = *localtime(&timestamp);
+    
+    if(datetime.tm_hour >= 22 || datetime.tm_hour <= 4){
+        std::cout << "Welcome late traveller, don't stay too long, sleep is more important than this! :)\n" << std::endl;
     }
-
+    
+    std::cout << "What's the biggest fibonacci number I can compute in a second without overflow?\n";
+//-------------------------------------------------------
+    std::cout << "\nrecursive approach\n";
+    run_recursive_approach();
+//-------------------------------------------------------
+    std::cout << "\nnaive approach\n";
+    run_naive_approach();
+//-------------------------------------------------------
+    std::cout<<"\nvectorization approach\n";
+    run_naive_vector_approach();
+//-------------------------------------------------------
     return 0;
 }
-
-//bitset wrapper
-

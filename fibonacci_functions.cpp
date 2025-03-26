@@ -5,14 +5,6 @@ using namespace std::chrono_literals;
 // global variables
 bool global_excede_time = false;  // actual definition
 
-//timer to time the functions as a thread
-static bool done = false;
-void timer(){
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    std::cout << "timer has finished" << std::endl;
-    done = true;
-}
-
 
 unsigned long long recursive_fb(unsigned long n){
     if(n < 2) return n;
@@ -97,8 +89,4 @@ std::vector<unsigned> vectorization_fb(long unsigned n){
         return num1;
     }
     return result;
-}
-
-void print(std::vector<unsigned> vec){
-    std::for_each(vec.rbegin(), vec.rend(), [](unsigned &n){std::cout << n;});
 }
