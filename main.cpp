@@ -26,15 +26,39 @@ int main(){
     }
     
     std::cout << "What's the biggest fibonacci number I can compute in a second without overflow?\n";
-//-------------------------------------------------------
-    std::cout << "\nrecursive approach\n";
-    run_recursive_approach();
-//-------------------------------------------------------
-    std::cout << "\nnaive approach\n";
-    run_naive_approach();
-//-------------------------------------------------------
-    std::cout<<"\nvectorization approach\n";
-    run_naive_vector_approach();
-//-------------------------------------------------------
+    std::cout << "\nWhich approach would you like to run?\n\n";
+    std::cout << "(0) all\t (1) recursive\t(2) naive\t(3) naive with vectors\n";
+    std::cout << "input > ";
+    int input;
+    std::cin >> input;
+
+    switch(input){
+        case 1:
+            std::cout << "\nrecursive approach\n";
+            run_recursive_approach();
+            break;
+        case 2:
+            std::cout << "\nnaive approach\n";
+            run_naive_approach();
+            break;
+        case 3:
+            std::cout <<"\nvectorization approach\n";
+            run_naive_vector_approach();
+            break;
+        default:
+        //-------------------------------------------------------
+            std::cout << "\nrecursive approach\n";
+            run_recursive_approach();
+        //-------------------------------------------------------
+            std::cout << "\nnaive approach\n";
+            run_naive_approach();
+        //-------------------------------------------------------
+            std::cout<<"\nvectorization approach\n";
+            run_naive_vector_approach();
+        //-------------------------------------------------------
+            break;
+
+    }
+
     return 0;
 }

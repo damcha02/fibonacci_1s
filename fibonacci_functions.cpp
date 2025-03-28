@@ -85,7 +85,6 @@ std::vector<unsigned> vectorization_fb(long unsigned n){
     duration_per_fibonacci_vec_appr = end_vec_appr - start_vec_appr;
     if(duration_per_fibonacci_vec_appr >= 1s){
         global_excede_time = true;
-        std::cout << "finished after: " << duration_per_fibonacci_vec_appr.count() << "s\n";
         return num1;
     }
     return result;

@@ -5,7 +5,7 @@
 #include <fstream>
 #include <filesystem>
 
-void print_vec(std::vector<unsigned> vec, unsigned long long n);
+void print_vec(std::vector<unsigned> vec, unsigned long long n, std::chrono::duration<double> duration_per_fibonacci_vec_appr);
 
 
 void run_recursive_approach();
