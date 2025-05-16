@@ -10,6 +10,36 @@ void timer(){
     done = true;
 }
 
+void clear_csv_files() {
+    std::ofstream("../benchmarking/benchmark_recursive.csv", std::ios::trunc).close();
+    std::ofstream("../benchmarking/benchmark_naive.csv", std::ios::trunc).close();
+    std::ofstream("../benchmarking/benchmark_vector.csv", std::ios::trunc).close();
+}
+
+void print_to_file(unsigned approach ,unsigned long long n, double duration_per_fib){
+    //create a director 
+    
+    std::filesystem::create_directories("../benchmarking");
+    std::ofstream outFile;
+    switch(approach){
+        case 1: 
+            outFile.open("../benchmarking/benchmark_recursive.csv", std::ios::app); 
+            break;
+        case 2:
+            outFile.open("../benchmarking/benchmark_naive.csv", std::ios::app);
+            break;
+        case 3:
+            outFile.open("../benchmarking/benchmark_vector.csv", std::ios::app);
+            break;
+        default:
+            std::cerr << "file not found" << std::endl;
+            return;
+    }
+
+    if(outFile.is_open()){
+        outFile << n << "," << duration_per_fib << "\n";
+    }
+}
 
 void print_vec(std::vector<unsigned> vec, unsigned long long n, std::chrono::duration<double> duration_per_fibonacci_vec_appr){
     
@@ -50,7 +80,52 @@ void print_vec(std::vector<unsigned> vec, unsigned long long n, std::chrono::dur
      
 }
 
+void average_out_and_add_time(double time1, int n){
+    double time_to_add;
 
+    for(int i = 94; i < 20000; i += 250){
+        time_to_add = time1 * (i / n);
+        if(time_to_add > 1.0) break;    
+        print_to_file(2, i, time_to_add);
+    }
+}
+
+void benchmarking(){
+    clear_csv_files();
+
+    std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
+    std::chrono::duration<double> duration_per_fibonacci_number_recursive = 0s;
+    for(unsigned n = 0; n < 42; ++n){
+        start = std::chrono::high_resolution_clock::now();
+        recursive_fb(n);
+        end = std::chrono::high_resolution_clock::now();
+        duration_per_fibonacci_number_recursive = end - start;
+        print_to_file(1, n, duration_per_fibonacci_number_recursive.count());
+    }
+
+    std::chrono::time_point<std::chrono::high_resolution_clock> start_naive, end_naive;
+    std::chrono::duration<double> duration_per_fibonacci_number_naive = 0s;
+    double time_array[94];
+    for(unsigned n = 0; n <= 93; ++n){
+        start_naive = std::chrono::high_resolution_clock::now();
+        naive_fb(n);
+        end_naive = std::chrono::high_resolution_clock::now();
+        duration_per_fibonacci_number_naive = end_naive - start_naive;
+        print_to_file(2, n, duration_per_fibonacci_number_naive.count());
+        time_array[n] = duration_per_fibonacci_number_naive.count();
+    }
+    average_out_and_add_time(time_array[93], 93);
+
+    std::chrono::time_point<std::chrono::high_resolution_clock> start_vec_appr, end_vec_appr;
+    std::chrono::duration<double> duration_per_fibonacci_vec_appr = 0s;
+    for(unsigned n = 0; n <= 15000; n += 120){
+        start_vec_appr = std::chrono::high_resolution_clock::now();
+        vectorization_fb(n);
+        end_vec_appr = std::chrono::high_resolution_clock::now();
+        duration_per_fibonacci_vec_appr = end_vec_appr - start_vec_appr;
+        if(duration_per_fibonacci_vec_appr.count() < 1.0) print_to_file(3, n, duration_per_fibonacci_vec_appr.count());
+    }
+}
 void run_recursive_approach(){
 
     unsigned long long num = 0;
@@ -120,9 +195,9 @@ void run_naive_vector_approach(){
 
     std::vector<unsigned> result;
     // binary search
-    unsigned long low = 0, high = 10000, best = 0;
+    unsigned long low = 0, high = 20000, best = 0;
     while( low <= high ){
-        unsigned long mid = low + (high - low) / 2;
+        unsigned long mid = low + (high - low) / 2;        
         start_vec_appr = std::chrono::high_resolution_clock::now();
         result = vectorization_fb(mid);
         end_vec_appr = std::chrono::high_resolution_clock::now();

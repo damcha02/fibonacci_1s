@@ -27,7 +27,7 @@ int main(){
     
     std::cout << "What's the biggest fibonacci number I can compute in a second without overflow?\n";
     std::cout << "\nWhich approach would you like to run?\n\n";
-    std::cout << "(0) all\t (1) recursive\t(2) naive\t(3) naive with vectors\n";
+    std::cout << "(0) all\t (1) recursive\t(2) naive\t(3) naive with vectors\t(6) benchmarking\n";
     std::cout << "input > ";
     int input;
     std::cin >> input;
@@ -44,6 +44,10 @@ int main(){
         case 3:
             std::cout <<"\nvectorization approach\n";
             run_naive_vector_approach();
+            break;
+        case 6: 
+            std::cout << "\nbenchmarking\n";
+            benchmarking();
             break;
         default:
         //-------------------------------------------------------

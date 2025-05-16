@@ -8,6 +8,8 @@
 #include <vector>
 #include <assert.h>
 #include <algorithm>
+#include <cblas-openblas.h>
+
 
 extern bool global_excede_time;
 
